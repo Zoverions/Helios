@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ref_toolkit"
+version = "1.0.0"
+description = "Helios: toolkit for the Resonant Entropy Field simulations and analytics"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+
+[project.dependencies]
+numpy = "^1.25"
+scipy = "^1.11"
+matplotlib = "^3.8"
+pymc = {version = "^5.0", optional = false}
+click = "^8.1"
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-q"
