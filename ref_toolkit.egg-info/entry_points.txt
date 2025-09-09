@@ -1,0 +1,3 @@
+[console_scripts]
+ref-fpe = ref_toolkit.cli:main
+ref-sim = ref_toolkit.sim.neuromorphic_diagram:main
