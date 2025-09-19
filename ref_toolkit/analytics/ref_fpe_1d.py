@@ -4,9 +4,10 @@ import numpy as np
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 from ..utils import normalize_pdf, safe_log
+from typing import Tuple, Dict, Any
 
 
-def fpe_rhs_stable(t, P, phi_grid, omega, g_rel, gamma, sigma):
+def fpe_rhs_stable(t: float, P: np.ndarray, phi_grid: np.ndarray, omega: float, g_rel: float, gamma: float, sigma: float) -> np.ndarray:
     dphi = phi_grid[1] - phi_grid[0]
     safe_phi = np.maximum(phi_grid, 1e-9)
     # drift
@@ -36,7 +37,7 @@ def fpe_rhs_stable(t, P, phi_grid, omega, g_rel, gamma, sigma):
     return dPdt
 
 
-def solve_fpe(phi_grid, P0, omega, g_rel, gamma, sigma, t_span=(0, 20)):
+def solve_fpe(phi_grid: np.ndarray, P0: np.ndarray, omega: float, g_rel: float, gamma: float, sigma: float, t_span: Tuple[float, float] = (0, 20)) -> np.ndarray:
     sol = solve_ivp(
         fun=lambda t, y: fpe_rhs_stable(t, y, phi_grid, omega, g_rel, gamma, sigma),
         t_span=t_span,
@@ -54,14 +55,14 @@ def solve_fpe(phi_grid, P0, omega, g_rel, gamma, sigma, t_span=(0, 20)):
     return P_final
 
 
-def compute_stats(phi_grid, P):
+def compute_stats(phi_grid: np.ndarray, P: np.ndarray) -> Tuple[float, float]:
     mean = np.trapz(phi_grid * P, phi_grid)
     var = np.trapz(P * (phi_grid - mean)**2, phi_grid)
     std = np.sqrt(var)
     return mean, std
 
 
-def run_fpe_analysis(out_file='fpe_evolution.png', mode='demo'):
+def run_fpe_analysis(out_file: str = 'fpe_evolution.png', mode: str = 'demo') -> Dict[str, Any]:
     phi_grid = np.linspace(0.01, 2.0, 200)
     P0 = np.exp(-((phi_grid - 1.0)**2) / (2 * 0.1**2))
     P0 /= np.trapz(P0, phi_grid)

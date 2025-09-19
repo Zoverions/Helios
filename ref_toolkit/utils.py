@@ -1,6 +1,7 @@
 import numpy as np
+from typing import Tuple
 
-def normalize_pdf(pdf, x):
+def normalize_pdf(pdf: np.ndarray, x: np.ndarray) -> np.ndarray:
     """Normalize a PDF defined on grid x."""
     area = np.trapz(pdf, x)
     if area <= 0:
@@ -8,5 +9,5 @@ def normalize_pdf(pdf, x):
     return pdf / area
 
 
-def safe_log(x, eps=1e-12):
+def safe_log(x: np.ndarray, eps: float = 1e-12) -> np.ndarray:
     return np.log(np.maximum(x, eps))

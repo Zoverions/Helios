@@ -5,9 +5,10 @@ It emits a small JSON summary and optionally a PNG phase diagram.
 import numpy as np
 import json
 import argparse
+from typing import Tuple, Optional
 
 
-def compute_critical_g_rel(alpha_grid=None):
+def compute_critical_g_rel(alpha_grid: Optional[np.ndarray] = None) -> Tuple[np.ndarray, np.ndarray]:
     if alpha_grid is None:
         alpha_grid = np.linspace(0.0, 1.0, 41)
     # toy deterministic mapping: critical g_rel increases with alpha nonlinearly
@@ -15,7 +16,7 @@ def compute_critical_g_rel(alpha_grid=None):
     return alpha_grid, g_crit
 
 
-def main(argv=None):
+def main(argv: Optional[list] = None) -> int:
     parser = argparse.ArgumentParser(description='Neuromorphic diagram stub')
     parser.add_argument('--chip', type=str, default='dynapse-se2')
     parser.add_argument('--out', type=str, default='phase_diagram.json')

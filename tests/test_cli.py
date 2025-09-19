@@ -7,3 +7,10 @@ def test_cli_fpe_demo():
     res = runner.invoke(main, ['fpe', '--mode', 'demo', '--out', 'test_out.png'])
     assert res.exit_code == 0
     assert 'FPE analysis complete' in res.output
+
+
+def test_cli_sim():
+    runner = CliRunner()
+    res = runner.invoke(main, ['sim', '--chip', 'test-chip', '--out', 'test_phase.json'])
+    assert res.exit_code == 0
+    assert 'Neuromorphic simulation complete' in res.output
